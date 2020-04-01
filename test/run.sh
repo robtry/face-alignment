@@ -1,6 +1,7 @@
 reset
+echo "Run this file inside workspace!!"
 echo "Compiling..."
-g++ src/main.cpp `pkg-config --cflags --libs opencv4`
+g++ src/temp.cpp `pkg-config --cflags --libs opencv4`
 echo ""
 echo "Running tests..."
 

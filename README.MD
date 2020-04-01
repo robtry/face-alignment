@@ -13,7 +13,7 @@ xhost +
 docker run --privileged --device /dev/video0:/dev/video0 -v $(pwd):/root/workspace -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -p 5000:5000 -p 8888:8888 -it robtry/opencv-420
 
 # Mac
-sudo docker run -it --privileged --device /dev/video0:/dev/video0 -v $(pwd):/root/workspace -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=docker.for.mac.host.internal:0  -p 5000:5000 -p 8888:8888 robtry/opencv-420
+sudo docker run -it -v $(pwd):/root/workspace -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=docker.for.mac.host.internal:0  -p 5000:5000 -p 8888:8888 robtry/opencv-420
 ```
 
 ## Compile
@@ -27,7 +27,7 @@ g++ <file>.cpp `pkg-config --cflags --libs opencv4`
 
 ```sh
 # from docker to this workspace
-cp /usr/include/opencv4/ .
+cp -r /usr/include/opencv4/ .
 ```
 
 Then add to configuration file

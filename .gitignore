@@ -137,4 +137,5 @@ opencv4
 test/*
 !test/_blank
 !test/run.sh
+!test/premake.sh
 .vscode
