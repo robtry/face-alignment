@@ -139,3 +139,4 @@ test/*
 !test/run.sh
 !test/premake.sh
 .vscode
+src/output

@@ -22,6 +22,12 @@ sudo docker run -it -v $(pwd):/root/workspace -v /tmp/.X11-unix:/tmp/.X11-unix -
 #inside docker
 g++ <file>.cpp `pkg-config --cflags --libs opencv4`
 ```
+```sh
+#using cmake
+cmake .
+make
+./output <image>
+```
 
 ## Autocomplete in vscode:
 
