@@ -11,7 +11,7 @@ echo "IMG 2"
 ./a.out test/img2.jpg
 echo ""
 echo "IMG 3"
-./a.out test/img2.jpg
+./a.out test/img3.jpg
 echo ""
 echo "IMG 4"
 ./a.out test/img4.jpg

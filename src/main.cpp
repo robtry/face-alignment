@@ -1,9 +1,12 @@
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp> // read image
-//#include <opencv2/highgui.hpp> // display image in window
 #include <opencv2/objdetect.hpp> // for cascade classifier
 
+#include <opencv2/highgui.hpp> // display image in window
+#include <opencv2/imgproc.hpp> //draw
+
 #include <iostream>
+#include <math.h>
 
 using namespace cv;
 using namespace std;
@@ -14,6 +17,7 @@ const string EYESMODEL = "/opt/opencv/data/haarcascades/haarcascade_eye.xml";
 
 int main(int argc, char **argv)
 {
+	Mat finalImage;
 	// There is no arg in the excecution
 	if (argc != 2) { cout << " There is no image to load \n"; return -1; }
 
@@ -43,21 +47,44 @@ int main(int argc, char **argv)
 		vector<Rect> eyes;
 		eyes_cascade.detectMultiScale(faceROI, eyes);
 		cout << "Eyes found: " << eyes.size() << "\n";
+
 		if(eyes.size() == 2) {
-			for ( size_t i = 0; i < eyes.size(); i++ )
-			{
-				cout << "Eye: " << eyes[i] << "\n";
-			}
+				// Eye A
+				cout << "Eye A: " << eyes[0] << "\n";
+				Point eye_center_A( faces[i].x + eyes[0].x + eyes[0].width/2, faces[i].y + eyes[0].y + eyes[0].height/2 );
+				// Eye B
+				cout << "Eye B: " << eyes[1] << "\n";
+				Point eye_center_B( faces[i].x + eyes[1].x + eyes[1].width/2, faces[i].y + eyes[1].y + eyes[1].height/2 );
+
+				//get angle | JUST GET THE POSITIVE
+				// https://math.stackexchange.com/questions/1201337/finding-the-angle-between-two-points
+				double angleA = atan2(eye_center_A.y - eye_center_B.y, eye_center_A.x - eye_center_B.x) * 180 / M_PI;
+				cout << "Angle A: " << angleA << "\n";
+				double angleB = atan2(eye_center_B.y - eye_center_A.y, eye_center_B.x - eye_center_A.x) * 180 / M_PI;
+				cout << "Angle B: " << angleB << "\n";
+
+
+				Point face_center(faces[i].x + faces[i].width / 2, faces[i].y + faces[i].width );
+				Mat rotationMatrix = getRotationMatrix2D(face_center, angleA > 0 ? angleA : angleB , 1.0);
+				warpAffine(image(faces[i]), finalImage, rotationMatrix, faces[i].size());
+
 			cout << "\n";
 		} else {
 			cout << "No se procesa" << "\n";
 		}
+		//draw
+		/*for ( size_t j = 0; j < eyes.size(); j++ )
+		{
+			Point eye_center( faces[i].x + eyes[j].x + eyes[j].width/2, faces[i].y + eyes[j].y + eyes[j].height/2 );
+			int radius = cvRound( (eyes[j].width + eyes[j].height)*0.25 );
+			circle( image, eye_center, radius, Scalar( 255, 0, 0 ), 4 );
+		}*/
 	}
 
 	//show images
-	// namedWindow( "Display window", WINDOW_AUTOSIZE ); // Create a window for display.
-	// imshow( "Display window", image ); // Show our image inside it.
-	// waitKey(0); // Wait for a keystroke in the window
+	namedWindow( "Display window", WINDOW_AUTOSIZE ); // Create a window for display.
+	imshow( "Display window", finalImage ); // Show our image inside it.
+	waitKey(0); // Wait for a keystroke in the window
 	return 0;
 }
 
@@ -65,3 +92,17 @@ int main(int argc, char **argv)
 // https://docs.opencv.org/4.2.0/db/d28/tutorial_cascade_classifier.html
 
 // https://hetpro-store.com/TUTORIALES/opencv-rect/ | Rect
+
+// https://stackoverflow.com/questions/10143555/how-to-align-face-images-c-opencv | just use two points
+
+// https://github.com/meefik/face-alignment/blob/master/detect.js
+
+// https://stackoverflow.com/questions/8267191/how-to-crop-a-cvmat-in-opencv | crop image
+
+
+/*
+//get distance
+				// simple euclidean distance
+				//double distance = sqrt( pow(eye_center_A.x - eye_center_B.x , 2) + pow(eye_center_B.y - eye_center_B.y, 2) );
+				//cout << "Distance between eyes: " << distance << "\n";
+*/
