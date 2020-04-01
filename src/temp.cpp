@@ -67,6 +67,8 @@ int main(int argc, char **argv)
 				Mat rotationMatrix = getRotationMatrix2D(face_center, angleA > 0 ? angleA : angleB , 1.0);
 				warpAffine(image(faces[i]), finalImage, rotationMatrix, faces[i].size());
 
+			//size(x,y)
+			resize(image, finalImage, Size(40,40)); 
 			cout << "\n";
 		} else {
 			cout << "No se procesa" << "\n";
@@ -81,8 +83,8 @@ int main(int argc, char **argv)
 	}
 
 	//show images
-	// namedWindow( "Display window", WINDOW_AUTOSIZE ); // Create a window for display.
-	// imshow( "Display window", finalImage ); // Show our image inside it.
-	// waitKey(0); // Wait for a keystroke in the window
+	namedWindow( "Display window", WINDOW_AUTOSIZE ); // Create a window for display.
+	imshow( "Display window", finalImage ); // Show our image inside it.
+	waitKey(0); // Wait for a keystroke in the window
 	return 0;
 }
