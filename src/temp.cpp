@@ -63,12 +63,15 @@ int main(int argc, char **argv)
 				cout << "Angle B: " << angleB << "\n";
 
 				//rotate
-				Point face_center(faces[i].x + faces[i].width / 2, faces[i].y + faces[i].width );
+				Point face_center(faces[i].x + faces[i].width / 2, faces[i].y + faces[i].height );
 				Mat rotationMatrix = getRotationMatrix2D(face_center, angleA > 0 ? angleA : angleB , 1.0);
 				warpAffine(image(faces[i]), finalImage, rotationMatrix, faces[i].size());
 
 			//size(x,y)
-			resize(image, finalImage, Size(40,40)); 
+			//resize(image, finalImage, Size(200,200)); 
+
+			imwrite("img1.jpg", finalImage);
+
 			cout << "\n";
 		} else {
 			cout << "No se procesa" << "\n";

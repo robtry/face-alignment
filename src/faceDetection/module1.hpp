@@ -9,7 +9,6 @@ using namespace cv;
 class Module1 {
 	private:
 		static string readImage(const string file);
-		
 	public:
 		static void detectFaces(Mat image);
 };
