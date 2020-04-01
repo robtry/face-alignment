@@ -140,3 +140,4 @@ test/*
 !test/premake.sh
 .vscode
 src/output
+output
