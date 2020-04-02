@@ -7,10 +7,12 @@ using namespace std;
 using namespace cv;
 
 class Module1 {
-	private:
-		static string readImage(const string file);
+	const static string FACEMODEL;
 	public:
-		static void detectFaces(Mat image);
+	/**
+	 * return vector of Rect with ROI of possible faces
+	*/
+	static void detectFaces(vector<Rect> &faces, const Mat image);
 };
 
 #endif

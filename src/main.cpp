@@ -14,9 +14,6 @@
 using namespace cv;
 using namespace std;
 
-// Path to the model
-const string FACEMODEL = "/opt/opencv/data/haarcascades/haarcascade_frontalface_alt.xml";
-//const string EYESMODEL = "/opt/opencv/data/haarcascades/haarcascade_eye.xml";
 
 int main(int argc, char **argv)
 {
@@ -27,21 +24,15 @@ int main(int argc, char **argv)
 	image = imread(argv[1], IMREAD_GRAYSCALE); // Read the file
 	if (image.empty()) { cout << "Could not open or find the image \n"; return -1; }
 
-	CascadeClassifier face_cascade;
-	// Load classifiers
-	if (!face_cascade.load(FACEMODEL)) { cout << "Error loading face cascade\n"; return -1; }
-	// Detect faces
+	// Detect Faces
 	vector<Rect> faces;
-	face_cascade.detectMultiScale( image, faces );
-	cout << "Faces found: " << faces.size() << "\n\n";
-
-
+	Module1::detectFaces(faces, image);
 
 	for ( size_t i = 0; i < faces.size(); i++ )
 	{
-		FaceAlignment::alignFace(image, faces[i], 200, 200);
-		//FaceAlignment::alignFaceDebugMode(image, faces[i], 200, 200, false);
-		//FaceAlignment::alignFaceDrawMode(image, faces[i], 200, 200);
+		//FaceAlignment::alignFace(image, faces[i], 200, 200);
+		//FaceAlignment::alignFaceDebugMode(image, faces[i], 200, 200);
+		FaceAlignment::alignFaceDrawMode(image, faces[i], 200, 200);
 	}
 
 
@@ -58,6 +49,8 @@ int main(int argc, char **argv)
 // https://github.com/meefik/face-alignment/blob/master/detect.js
 
 // https://stackoverflow.com/questions/8267191/how-to-crop-a-cvmat-in-opencv | crop image
+
+// time https://www.geeksforgeeks.org/measure-execution-time-function-cpp/
 
 
 /*

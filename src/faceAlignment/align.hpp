@@ -41,7 +41,6 @@ private:
 			const int height,
 			const int width,
 			const bool debugMode,
-			const bool deepDebugMode,
 			const bool drawMode);
 
 public:
@@ -68,8 +67,7 @@ public:
 			const Mat &image,
 			const Rect &faceArea,
 			const int height,
-			const int width,
-			const bool deepDebug);
+			const int width);
 	/**
 	 * @see FaceAlignment::alignFace()
 	 * visually see process

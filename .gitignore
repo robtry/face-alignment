@@ -134,6 +134,7 @@ $RECYCLE.BIN/
 
 # library
 opencv4
+# extra files
 test/*
 !test/_blank
 !test/run.sh
@@ -141,3 +142,4 @@ test/*
 .vscode
 src/output
 output
+core
