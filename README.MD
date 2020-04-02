@@ -1,5 +1,8 @@
 # Face Alignment
-
+## Authors:
+[Roberto Gervacio](https://github.com/robtry) <br/>
+[Diego Moreno](https://github.com/DiegoMA1) <br/>
+[Jorge Palacios](https://github.com)   
 ## Start:
 
 ```sh
