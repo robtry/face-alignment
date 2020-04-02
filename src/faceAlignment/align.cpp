@@ -83,11 +83,14 @@ Mat FaceAlignment::alignFaceComplete(
 		cout << "draw: " << drawMode << "\n";
 	}
 
-	Mat alignedFace = image(faceArea); // store final result
+	Mat newImage = image.clone(); //clone tho avoid crop
+	Mat alignedFace = newImage(faceArea); // store final result
+
+	//showWindow(alignedFace); // delete this
 
 	// 1 - Detect eyes
 	vector<Rect> eyesDetected; // vector for eyes after cascade
-	detectEyes(image(faceArea), eyesDetected); //take care moving this
+	detectEyes(alignedFace, eyesDetected); //take care moving this
 	if (debugMode || drawMode) { cout << "Eyes found: " << eyesDetected.size() << "\n"; }
 
 	if (eyesDetected.size() == 2)
