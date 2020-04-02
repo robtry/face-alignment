@@ -139,7 +139,9 @@ test/*
 !test/_blank
 !test/run.sh
 !test/premake.sh
+# vsconfig
 .vscode
-src/output
-output
+# executable
+exe
+# something from docker
 core

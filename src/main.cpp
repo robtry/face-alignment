@@ -1,12 +1,7 @@
 #include <opencv2/core.hpp> //types
 #include <opencv2/imgcodecs.hpp> // read image
-#include <opencv2/objdetect.hpp> // for cascade classifier
-
-#include <opencv2/highgui.hpp> // display image in window
-#include <opencv2/imgproc.hpp> //draw
 
 #include <iostream>
-#include <math.h>
 
 #include "faceDetection/module1.hpp"
 #include "faceAlignment/align.hpp"
@@ -32,30 +27,8 @@ int main(int argc, char **argv)
 	{
 		//FaceAlignment::alignFace(image, faces[i], 200, 200);
 		//FaceAlignment::alignFaceDebugMode(image, faces[i], 200, 200);
-		FaceAlignment::alignFaceDrawMode(image, faces[i], 200, 200);
+		FaceAlignment::alignFaceDrawMode(image, faces[i], 200, 200, true);
 	}
-
 
 	return 0;
 }
-
-
-// https://docs.opencv.org/4.2.0/db/d28/tutorial_cascade_classifier.html
-
-// https://hetpro-store.com/TUTORIALES/opencv-rect/ | Rect
-
-// https://stackoverflow.com/questions/10143555/how-to-align-face-images-c-opencv | just use two points
-
-// https://github.com/meefik/face-alignment/blob/master/detect.js
-
-// https://stackoverflow.com/questions/8267191/how-to-crop-a-cvmat-in-opencv | crop image
-
-// time https://www.geeksforgeeks.org/measure-execution-time-function-cpp/
-
-
-/*
-//get distance
-				// simple euclidean distance
-				//double distance = sqrt( pow(eye_center_A.x - eye_center_B.x , 2) + pow(eye_center_B.y - eye_center_B.y, 2) );
-				//cout << "Distance between eyes: " << distance << "\n";
-*/

@@ -10,5 +10,5 @@ g++ src/main.cpp -c `pkg-config --cflags --libs opencv4`
 echo "Module1..."
 g++ src/faceDetection/module1.cpp -c `pkg-config --cflags --libs opencv4`
 echo "Executable"
-g++ util.o align.o module1.o main.o `pkg-config --cflags --libs opencv4`
+g++ util.o align.o module1.o main.o -o exe `pkg-config --cflags --libs opencv4`
 echo "Done"

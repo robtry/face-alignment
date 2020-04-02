@@ -18,16 +18,25 @@ sudo docker run -it -v $(pwd):/root/workspace -v /tmp/.X11-unix:/tmp/.X11-unix -
 
 ## Compile
 
+You can follow one the next options:
+
 ```sh
 #inside docker
 g++ <file>.cpp `pkg-config --cflags --libs opencv4`
 ```
+
 ```sh
 #using cmake
 cmake .
 make
-./output <image>
+./exe <image>
 ```
+
+```sh
+#using a simple script
+./test/premake.sh
+```
+
 
 ## Autocomplete in vscode:
 
@@ -50,7 +59,34 @@ Then add to configuration file
 }
 ```
 
+## How to use 
+
+Just copy the foler `src/faceAlignment` to your project. Then in you `main.cpp`
+
+```c++
+#include "faceAlignment/align.hpp"
+#include <iostream>
+
+using namespace std;
+
+int main(int argc, char **argv)
+{
+	//something important here
+	//...
+
+
+	for ( size_t i = 0; i < faces.size(); i++ )
+	{
+		// just use one of this
+		FaceAlignment::alignFace(image, faces[i], 40, 40);
+		FaceAlignment::alignFaceDebugMode(image, faces[i], 40, 40);
+		FaceAlignment::alignFaceDrawMode(image, faces[i], 40, 40, true);
+	}
+
+	return 0;
+}
+```
+
 ## To Do
 
-- [ ] Cmake
-- [ ] Times
+- [ ] Review 1

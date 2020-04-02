@@ -7,17 +7,22 @@
 using namespace std;
 using namespace cv;
 
+// https://docs.opencv.org/4.2.0/db/d28/tutorial_cascade_classifier.html | Detect Eyes
+// https://hetpro-store.com/TUTORIALES/opencv-rect/ | Info about Rect
+// https://github.com/meefik/face-alignment/blob/master/detect.js | Face alignment in js
+// https://stackoverflow.com/questions/8267191/how-to-crop-a-cvmat-in-opencv | Crop image
+
 class FaceAlignment
 {
 	const static string EYESMODEL;
 
 private:
 	/**
-	 * returns true if can detect exactly 2 eyes
+	 * Load the model and passes objects found in a Vector of Rect
 	*/
-	static void detectEyes(const Mat &face, vector<Rect> &eyesDetected);
+	static void detectEyes(const Mat &faceROI, vector<Rect> &eyesDetected);
 	/**
-	 * Get coordinates of center
+	 * Get coordinates of the eye center
 	*/
 	static void getEyeCenter(const Rect &face, const Rect &eye, Point &eyeCoordinates);
 	/**
@@ -25,13 +30,16 @@ private:
 	*/
 	static void getFaceCenter(const Rect &face, Point &faceCoordinates);
 	/**
-	 * Returns angle between two points
+	 * Get THE POSITIVE angle between the eyes
+	 * Just use two points:
+	 * @link https://stackoverflow.com/questions/10143555/how-to-align-face-images-c-opencv 
 	*/
 	static double getAngleBetweenEyes(const Point &eyeA, const Point &eyeB);
 	/**
-	 * Get coordinates of center
+	 * Show Mat in window
 	*/
-	static void rotate(Mat &face);
+	static void showWindow(const Mat &img);
+	static void drawEyes(vector<Rect> eyesDetected, const Rect &faceArea, const Mat &image);
 	/**
 	 * Main align method, public are variant of this
 	*/
@@ -70,13 +78,15 @@ public:
 			const int width);
 	/**
 	 * @see FaceAlignment::alignFace()
-	 * visually see process
+	 * visually see the process, will not resize
+	 * @param Compare if false will see the real output else you will compare rotation with original so no resize will be applied
 	*/
 	static Mat alignFaceDrawMode(
 			const Mat &image,
 			const Rect &faceArea,
 			const int height,
-			const int width);
+			const int width,
+			const bool compare);
 };
 
 #endif
