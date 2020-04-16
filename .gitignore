@@ -134,14 +134,18 @@ $RECYCLE.BIN/
 
 # library
 opencv4
+dlib
 # extra files
 test/*
-!test/_blank
 !test/run.sh
-!test/premake.sh
 # vsconfig
 .vscode
 # executable
 exe
 # something from docker
 core
+#models
+models/*
+!models/_download.txt
+#build
+build/*

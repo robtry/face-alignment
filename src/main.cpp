@@ -23,11 +23,14 @@ int main(int argc, char **argv)
 	vector<Rect> faces;
 	Module1::detectFaces(faces, image);
 
+	//Aling face
+	FaceAlignment aling;
+
 	for ( size_t i = 0; i < faces.size(); i++ )
 	{
-		//FaceAlignment::alignFace(image, faces[i], 200, 200);
-		//FaceAlignment::alignFaceDebugMode(image, faces[i], 200, 200);
-		FaceAlignment::alignFaceDrawMode(image, faces[i], 200, 200, true);
+		//aling.alignFace(image, faces[i], 200, 200);
+		aling.alignFaceDebugMode(image, faces[i], 200, 200);
+		//aling.alignFaceDrawMode(image, faces[i], 200, 200, true);
 	}
 
 	return 0;

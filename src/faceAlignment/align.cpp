@@ -1,5 +1,5 @@
 #include <opencv2/core.hpp>
-#include <opencv2/objdetect.hpp> // for cascade classifier
+
 #include <opencv2/imgproc.hpp>	 // for rotate, save
 #include <opencv2/highgui.hpp>	 // display image in window
 #include <chrono> //for time meassure
@@ -12,23 +12,24 @@ using namespace std::chrono;
 using namespace std;
 using namespace cv;
 
-// Paths to the model
-const string FaceAlignment::EYESMODEL = "/opt/opencv/data/haarcascades/haarcascade_eye.xml";
 
-void FaceAlignment::detectEyes(const Mat &faceROI, vector<Rect> &eyesDetected)
-{
+FaceAlignment::FaceAlignment(){
+
+	EYESMODEL = "/opt/opencv/data/haarcascades/haarcascade_eye.xml";
+	//EYESMODEL = "/root/workspace/models/shape_predictor_68_face_landmarks.dat";
+
 	// Load cascade
-	CascadeClassifier eyesCascade;
-	if (!eyesCascade.load(FaceAlignment::EYESMODEL))
+	if (!eyesCascade.load(EYESMODEL))
 	{
 		cout << "Error loading eyes cascade\n"
 				 << "Check path in \"align.cpp\"\n";
 	}
-	else
-	{
+}
+
+void FaceAlignment::detectEyes(const Mat &faceROI, vector<Rect> &eyesDetected)
+{
 		// Detect eyes
 		eyesCascade.detectMultiScale(faceROI, eyesDetected);
-	}
 }
 
 void FaceAlignment::getEyeCenter(const Rect &face, const Rect &eye, Point &eyeCoordinates)
@@ -38,7 +39,7 @@ void FaceAlignment::getEyeCenter(const Rect &face, const Rect &eye, Point &eyeCo
 }
 
 void FaceAlignment::getFaceCenter(const Rect &face, Point &faceCoordinates)
-{
+{ 
 	faceCoordinates.x = Util::getCenterOfSegment(face.x, face.width);
 	faceCoordinates.y = Util::getCenterOfSegment(face.y, face.height);
 }
@@ -115,7 +116,7 @@ Mat FaceAlignment::alignFaceComplete(
 		Point faceCenter;
 		getFaceCenter(faceArea, faceCenter);
 		Mat rotationMatrix = getRotationMatrix2D(faceCenter, angle, 1.0);	
-		warpAffine(alignedFace, alignedFace, rotationMatrix, faceArea.size());
+		cv::warpAffine(alignedFace, alignedFace, rotationMatrix, faceArea.size());
 
 		// 5 - Resize
 		if(drawMode && debugMode){

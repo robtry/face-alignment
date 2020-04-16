@@ -6,7 +6,14 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 set(CMAKE_BUILD_FILES_DIRECTORY ${dir})
 project(test)
-add_executable(exe ${PROJECT_SOURCE_DIR}/src/main.cpp ${PROJECT_SOURCE_DIR}/src/Module1.cpp ${PROJECT_SOURCE_DIR}/src/Module1.hpp)
+add_executable(exe
+## ${PROJECT_SOURCE_DIR}/src/try.cpp
+${PROJECT_SOURCE_DIR}/src/faceDetection/module1.cpp
+${PROJECT_SOURCE_DIR}/src/faceAlignment/util.cpp
+${PROJECT_SOURCE_DIR}/src/faceAlignment/align.cpp
+${PROJECT_SOURCE_DIR}/src/main.cpp
+)
 find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
-target_link_libraries(exe ${OpenCV_LIBS})
+include(./dlib/cmake )
+target_link_libraries(exe ${OpenCV_LIBS} dlib::dlib)

@@ -1,8 +1,4 @@
 # Face Alignment
-## Authors:
-[Roberto Gervacio](https://github.com/robtry) <br/>
-[Diego Moreno](https://github.com/DiegoMA1) <br/>
-[Jorge Palacios](https://github.com)   
 ## Start:
 
 ```sh
@@ -24,7 +20,7 @@ sudo docker run -it -v $(pwd):/root/workspace -v /tmp/.X11-unix:/tmp/.X11-unix -
 You can follow one the next options:
 
 ```sh
-#inside docker
+#inside docker | only opencv
 g++ <file>.cpp `pkg-config --cflags --libs opencv4`
 ```
 
@@ -46,19 +42,22 @@ make
 ```sh
 # from docker to this workspace
 cp -r /usr/include/opencv4/ .
+# from docker to this workspace
+# first clone repo in /opt/ https://github.com/davisking/dlib
+cp -r /opt/dlib/dlib/ .
 ```
 
 Then add to configuration file
 
-```js
+```json
 {
-	"configurations": [
-		{
-			"includePath": [
-				"${workspaceFolder}/**",
-				"${workspaceFolder}/opencv4/"
-			],
-		}
+"configurations": [
+  {
+    "includePath": [
+      "${workspaceFolder}/**",
+      "${workspaceFolder}/opencv4/"
+    ],
+  }
 }
 ```
 
@@ -74,22 +73,30 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-	//something important here
-	//...
+  //something important here
+  //...
 
 
-	for ( size_t i = 0; i < faces.size(); i++ )
-	{
-		// just use one of this
-		FaceAlignment::alignFace(image, faces[i], 40, 40);
-		FaceAlignment::alignFaceDebugMode(image, faces[i], 40, 40);
-		FaceAlignment::alignFaceDrawMode(image, faces[i], 40, 40, true);
-	}
+  for ( size_t i = 0; i < faces.size(); i++ )
+  {
+    // just use one of this
+    FaceAlignment::alignFace(image, faces[i], 40, 40);
+    FaceAlignment::alignFaceDebugMode(image, faces[i], 40, 40);
+    FaceAlignment::alignFaceDrawMode(image, faces[i], 40, 40, true);
+  }
 
-	return 0;
+  return 0;
 }
 ```
 
+## Authors:
+[Roberto Gervacio](https://github.com/robtry)
+
+[Diego Moreno](https://github.com/DiegoMA1)
+
+[Jorge Palacios](https://github.com)
+
 ## To Do
 
-- [ ] Review 1
+- [x] Review 1 - Add constructuctors, use dlib, avoid loading the model every call
+- [ ] Review 2 - 
