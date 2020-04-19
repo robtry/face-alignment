@@ -5,7 +5,7 @@
 # Get the image
 docker pull https://hub.docker.com/repository/docker/robtry/opencv-420
 
-# Enable xhost
+# Enable xhost !
 xhost +
 
 # Linux
@@ -24,33 +24,45 @@ You can follow one the next options:
 g++ <file>.cpp `pkg-config --cflags --libs opencv4`
 ```
 
+Compiling using dlib
+
 ```sh
-#using cmake
-cmake .
+# use cmake
+```
+
+### Compile the module
+
+*note:* In `models` folder you need to download and extract the model, you can find the link in `models/_download.txt`
+
+```sh
+# using cmake
+# inside docker, you don't need to download dlib repo
+mkdir build
+cd build
+cmake ..
 make
 ./exe <image>
 ```
 
-```sh
-#using a simple script
-./test/premake.sh
-```
-
-
 ## Autocomplete in vscode:
 
 ```sh
+# AUTOCOMPLETE OPENCV
 # from docker to this workspace
+cd ~/workspace/
 cp -r /usr/include/opencv4/ .
+
+# AUTOCOMPLETE DLIB
 # from docker to this workspace
-# first clone repo in /opt/ https://github.com/davisking/dlib
+cd /opt/
+git clone https://github.com/davisking/dlib
+cd ~/workspace/
 cp -r /opt/dlib/dlib/ .
 ```
 
-Then add to configuration file
+Then add to configuration file:
 
 ```json
-{
 "configurations": [
   {
     "includePath": [
@@ -58,7 +70,6 @@ Then add to configuration file
       "${workspaceFolder}/opencv4/"
     ],
   }
-}
 ```
 
 ## How to use 
@@ -77,19 +88,14 @@ int main(int argc, char **argv)
   //...
 
 
-  for ( size_t i = 0; i < faces.size(); i++ )
-  {
-    // just use one of this
-    FaceAlignment::alignFace(image, faces[i], 40, 40);
-    FaceAlignment::alignFaceDebugMode(image, faces[i], 40, 40);
-    FaceAlignment::alignFaceDrawMode(image, faces[i], 40, 40, true);
-  }
+  // wait for the next release to see implementation
 
   return 0;
 }
 ```
 
 ## Authors:
+
 [Roberto Gervacio](https://github.com/robtry)
 
 [Diego Moreno](https://github.com/DiegoMA1)

@@ -112,7 +112,7 @@ int main()
 {
 
 	//Read input image
-	Mat image = cv::imread("/root/workspace/test/anish.jpg");
+	Mat image = cv::imread("/root/workspace/test/img7.jpg");
 
 	//check if image exists
 	if (image.empty())
