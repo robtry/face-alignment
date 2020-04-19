@@ -31,8 +31,7 @@ int main(int argc, char **argv)
 	for ( size_t i = 0; i < faces.size(); i++ )
 	{
 		//aling.alignFace(image, faces[i], 200, 200);
-		//aling.alignFaceDebugMode(image, faces[i], 200, 200);
-		aling.alignFaceDrawMode(image, faces[i], 200, 200, true);
+		aling.alignFaceDebugMode(image, faces[i], 200, 200, true);
 	}
 
 	return 0;

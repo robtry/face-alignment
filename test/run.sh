@@ -26,3 +26,6 @@ echo ""
 echo "Starting Test 8..."
 ./FaceAlignment ../test/img8.jpg
 echo ""
+echo "Starting Test 9..."
+./FaceAlignment ../test/img9.jpg
+echo ""

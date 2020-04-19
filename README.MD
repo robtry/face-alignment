@@ -41,7 +41,7 @@ mkdir build
 cd build
 cmake ..
 make
-./exe <image>
+./FaceAlignment <img>
 ```
 
 ## Autocomplete in vscode:

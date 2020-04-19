@@ -95,25 +95,14 @@ public:
 			const int width);
 	/**
 	 * @see FaceAlignment::alignFace()
-	 * @param Debug => output details
-	 * Print details
+	 * @param draw => if true will show the final image
 	*/
 	cv::Mat alignFaceDebugMode(
 			const cv::Mat &image,
 			const cv::Rect &faceArea,
 			const int height,
-			const int width);
-	/**
-	 * @see FaceAlignment::alignFace()
-	 * visually see the process, will not resize
-	 * @param Compare if false will see the real output else you will compare rotation with original so no resize will be applied
-	*/
-	cv::Mat alignFaceDrawMode(
-			const cv::Mat &image,
-			const cv::Rect &faceArea,
-			const int height,
 			const int width,
-			const bool compare);
+			const bool draw);
 };
 
 #endif

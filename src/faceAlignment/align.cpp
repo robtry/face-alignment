@@ -23,7 +23,8 @@ FaceAlignment::FaceAlignment()
 {
 	// file which is a pre-trained cascade of regression tree implemented using
 	// "One Millisecond face alignment with an ensemble of regression trees"
-	faceLandmarkModel = "/root/workspace/models/shape_predictor_68_face_landmarks.dat";
+	//faceLandmarkModel = "/root/workspace/models/shape_predictor_68_face_landmarks.dat";
+	faceLandmarkModel = "/root/workspace/models/shape_predictor_5_face_landmarks.dat";
 	loadModel();
 }
 
@@ -87,6 +88,10 @@ void FaceAlignment::getEyesCoordinates(
 
 		//location of right eye right corner in input image
 		rightEye = facelandmarks[45];
+	} else if (facelandmarks.size() == 5){
+		// using landmark 5
+		leftEye = facelandmarks[2];
+		rightEye = facelandmarks[0];
 	}
 }
 
@@ -122,9 +127,6 @@ Mat FaceAlignment::alignFaceComplete(
 
 	Mat alignedFace = image(faceArea); // store final result
 
-	//converts original image to gray scale
-	//cvtColor(alignedFace, alignedFace, COLOR_BGR2GRAY);
-
 	// 1 - Get landmarks
 	//vector to store face landmark points
 	std::vector<Point> faceLandMarkPoints;
@@ -136,7 +138,6 @@ Mat FaceAlignment::alignFaceComplete(
 
 	// 3 - Get angle
 	double angle = getAngleBetweenEyes(leftEye, rightEye);
-
 	if (debugMode)
 	{
 		cout << "Angle : " << angle << '\n';
@@ -149,20 +150,16 @@ Mat FaceAlignment::alignFaceComplete(
 	warpAffine(alignedFace, alignedFace, rotationMatrix, faceArea.size());
 
 	// 5 - Resize
-	if (drawMode && debugMode)
-	{
-		resize(image, alignedFace, Size(width, height));
-	}
-	else
-	{
-		resize(alignedFace, alignedFace, Size(width, height));
-	}
+	resize(alignedFace, alignedFace, Size(width, height));
+
+	// 6 - Change to gray scale
+	cvtColor(alignedFace, alignedFace, COLOR_BGR2GRAY);
 
 	//time stop
 	auto stop = high_resolution_clock::now();
 	auto duration = duration_cast<milliseconds>(stop - start);
 
-	if (debugMode || drawMode)
+	if (debugMode)
 	{
 		cout << "Time: " << duration.count() << "ms\n";
 	}
@@ -188,17 +185,8 @@ Mat FaceAlignment::alignFaceDebugMode(
 		const Mat &image,
 		const Rect &faceArea,
 		const int height,
-		const int width)
-{
-	return alignFaceComplete(image, faceArea, height, width, true, false);
-}
-
-Mat FaceAlignment::alignFaceDrawMode(
-		const Mat &image,
-		const Rect &faceArea,
-		const int height,
 		const int width,
-		const bool crop)
+		const bool draw)
 {
-	return alignFaceComplete(image, faceArea, height, width, crop, true);
+	return alignFaceComplete(image, faceArea, height, width, true, draw);
 }
