@@ -12,7 +12,6 @@
 
 class FaceAlignment
 {
-
 private:
 	/** path to the model*/
 	std::string faceLandmarkModel;
@@ -27,53 +26,39 @@ private:
 	void loadModel();
 
 	/**
-	 * 
+	 * Get vector of cv::Points with all landmarks
 	*/
 	void getFaceLandmarks(
 			const cv::Mat &image,
 			const cv::Rect &faceArea,
-			std::vector<cv::Point2f> &points);
+			std::vector<cv::Point> &points);
 
 	/**
-	 * 
+	* Get coordinate of each eye
 	*/
-	void align(
-		cv::Mat &faceAligned,
-		const cv::Size &size,
-		const cv::Mat &image,
-		const std::vector<cv::Point2f> facelandmarks);
+	void getEyesCoordinates(
+			const std::vector<cv::Point> &faceLandMarkPoints,
+			cv::Point &leftEye,
+			cv::Point &rightEye);
 
 	/**
-	 * 
+	 * Get coordinates of the face center
+	 * helps with the rotation
 	*/
-	void similarityTransformMat(
-		std::vector<cv::Point2f> &initialPoints,
-		std::vector<cv::Point2f> &destinationPoints,
-		cv::Mat &similarityMat);
+	void getFaceCenter(const cv::Rect &face, cv::Point &faceCoordinates);
 
-	// /**
-	// * Load the model and passes objects found in a Vector of Rect
-	// */
-	// void detectEyes(const Mat &faceROI, vector<Rect> &eyesDetected);
-	// /**
-	//  * Get coordinates of the eye center
-	// */
-	// void getEyeCenter(const Rect &face, const Rect &eye, Point &eyeCoordinates);
-	// /**
-	//  * Get coordinates of the face center
-	// */
-	// void getFaceCenter(const Rect &face, Point &faceCoordinates);
 	// /**
 	//  * Get THE POSITIVE angle between the eyes
 	//  * Just use two points:
 	//  * @link https://stackoverflow.com/questions/10143555/how-to-align-face-images-c-opencv
 	// */
-	// double getAngleBetweenEyes(const Point &eyeA, const Point &eyeB);
-	// /**
-	//  * Show Mat in window
-	// */
+	double getAngleBetweenEyes(const cv::Point &eyeA, const cv::Point &eyeB);
+
+	/**
+	 * Show Mat in window
+	 * used for debug
+	*/
 	void showWindow(const cv::Mat &img);
-	// void drawEyes(vector<Rect> eyesDetected, const Rect &faceArea, const Mat &image);
 
 	/**
 	 * Main align method, public are variant of this
@@ -108,27 +93,27 @@ public:
 			const cv::Rect &faceArea,
 			const int height,
 			const int width);
-	// /**
-	//  * @see FaceAlignment::alignFace()
-	//  * @param Debug => output details
-	//  * Print details
-	// */
-	// Mat alignFaceDebugMode(
-	// 		const Mat &image,
-	// 		const Rect &faceArea,
-	// 		const int height,
-	// 		const int width);
-	// /**
-	//  * @see FaceAlignment::alignFace()
-	//  * visually see the process, will not resize
-	//  * @param Compare if false will see the real output else you will compare rotation with original so no resize will be applied
-	// */
-	// Mat alignFaceDrawMode(
-	// 		const Mat &image,
-	// 		const Rect &faceArea,
-	// 		const int height,
-	// 		const int width,
-	// 		const bool compare);
+	/**
+	 * @see FaceAlignment::alignFace()
+	 * @param Debug => output details
+	 * Print details
+	*/
+	cv::Mat alignFaceDebugMode(
+			const cv::Mat &image,
+			const cv::Rect &faceArea,
+			const int height,
+			const int width);
+	/**
+	 * @see FaceAlignment::alignFace()
+	 * visually see the process, will not resize
+	 * @param Compare if false will see the real output else you will compare rotation with original so no resize will be applied
+	*/
+	cv::Mat alignFaceDrawMode(
+			const cv::Mat &image,
+			const cv::Rect &faceArea,
+			const int height,
+			const int width,
+			const bool compare);
 };
 
 #endif
