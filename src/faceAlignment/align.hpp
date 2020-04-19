@@ -20,23 +20,37 @@ private:
 	/** store landmarks model provided by dlib */
 	dlib::shape_predictor landmarkDetector;
 
-	/** to store the default face detector method */
-	dlib::frontal_face_detector faceDetector;
-
 	/** 
 	 * Load the model using deserialize provided by dlib,
-	 * and start faceDetector provided by dlib,
 	 * this should be called inside constructor
 	*/
-	void loadModelAndStartDetector();
+	void loadModel();
 
 	/**
 	 * 
 	*/
 	void getFaceLandmarks(
 			const cv::Mat &image,
-			std::vector<cv::Point2f> &points,
-			dlib::shape_predictor landmarkDetector);
+			const cv::Rect &faceArea,
+			std::vector<cv::Point2f> &points);
+
+	/**
+	 * 
+	*/
+	void align(
+		cv::Mat &faceAligned,
+		const cv::Size &size,
+		const cv::Mat &image,
+		const std::vector<cv::Point2f> facelandmarks);
+
+	/**
+	 * 
+	*/
+	void similarityTransformMat(
+		std::vector<cv::Point2f> &initialPoints,
+		std::vector<cv::Point2f> &destinationPoints,
+		cv::Mat &similarityMat);
+
 	// /**
 	// * Load the model and passes objects found in a Vector of Rect
 	// */
@@ -58,8 +72,9 @@ private:
 	// /**
 	//  * Show Mat in window
 	// */
-	// void showWindow(const Mat &img);
+	void showWindow(const cv::Mat &img);
 	// void drawEyes(vector<Rect> eyesDetected, const Rect &faceArea, const Mat &image);
+
 	/**
 	 * Main align method, public are variant of this
 	*/
