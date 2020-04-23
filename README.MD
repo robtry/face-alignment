@@ -88,7 +88,29 @@ int main(int argc, char **argv)
   //...
 
 
-  // wait for the next release to see implementation
+  //Aling face
+
+  // option 1
+  /**
+   * note: if initialized like this the method will assume is in build folder
+   * the go ../models/ to find shape_predictor_5_face_landmarks.dat
+  */
+  FaceAlignment aling;
+
+  // option 2
+  /**
+   * You can pass the path to one of two models
+   * shape_predictor_5_face_landmarks.dat
+   * shape_predictor_68_face_landmarks.dat
+  */
+  //FaceAlignment aling("<some_path>/shape_predictor_68_face_landmarks.dat");
+
+  for ( size_t i = 0; i < faces.size(); i++ )
+  {
+    //aling.alignFace(image, faces[i], 200);
+    //aling.alignFaceDebugMode(image, faces[i], 150, false);
+    aling.alignFaceDebugMode(image, faces[i], 150, true);
+  }
 
   return 0;
 }
@@ -98,11 +120,9 @@ int main(int argc, char **argv)
 
 [Roberto Gervacio](https://github.com/robtry)
 
-[Diego Moreno](https://github.com/DiegoMA1)
-
 [Jorge Palacios](https://github.com)
 
 ## To Do
 
 - [x] Review 1 - Add constructuctors, use dlib, avoid loading the model every call
-- [ ] Review 2 - 
+- [x] Review 2 - Use dlib methods to align

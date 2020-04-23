@@ -23,9 +23,8 @@ FetchContent_MakeAvailable(dlib)
 # set(CMAKE_BUILD_FILES_DIRECTORY ${dir})
 
 add_executable(FaceAlignment
-# ${PROJECT_SOURCE_DIR}/src/try.cpp
+#${PROJECT_SOURCE_DIR}/src/try.cpp
 ${PROJECT_SOURCE_DIR}/src/faceDetection/module1.cpp
-${PROJECT_SOURCE_DIR}/src/faceAlignment/util.cpp
 ${PROJECT_SOURCE_DIR}/src/faceAlignment/align.cpp
 ${PROJECT_SOURCE_DIR}/src/main.cpp
 )

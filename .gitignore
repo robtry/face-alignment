@@ -140,12 +140,11 @@ test/*
 !test/run.sh
 # vsconfig
 .vscode
-# executable
-exe
 # something from docker
 core
 #models
 models/*
 !models/_download.txt
+!models/shape_predictor_5_face_landmarks.dat
 #build
 build/*
