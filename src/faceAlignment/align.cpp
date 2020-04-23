@@ -23,8 +23,8 @@ FaceAlignment::FaceAlignment()
 {
 	// file which is a pre-trained cascade of regression tree implemented using
 	// "One Millisecond face alignment with an ensemble of regression trees"
-	//faceLandmarkModel = "/root/workspace/models/shape_predictor_68_face_landmarks.dat";
-	faceLandmarkModel = "/root/workspace/models/shape_predictor_5_face_landmarks.dat";
+	//faceLandmarkModel = "../models/shape_predictor_68_face_landmarks.dat";
+	faceLandmarkModel = "../models/shape_predictor_5_face_landmarks.dat";
 	loadModel();
 }
 
@@ -153,7 +153,7 @@ Mat FaceAlignment::alignFaceComplete(
 	resize(alignedFace, alignedFace, Size(width, height));
 
 	// 6 - Change to gray scale
-	cvtColor(alignedFace, alignedFace, COLOR_BGR2GRAY);
+	//cvtColor(alignedFace, alignedFace, COLOR_BGR2GRAY);
 
 	//time stop
 	auto stop = high_resolution_clock::now();
