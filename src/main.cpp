@@ -28,10 +28,12 @@ int main(int argc, char **argv)
 	FaceAlignment aling;
 	//FaceAlignment aling("/root/workspace/models/shape_predictor_5_face_landmarks.dat");
 
+	Mat result;
+
 	for ( size_t i = 0; i < faces.size(); i++ )
 	{
-		//aling.alignFace(image, faces[i], 200);
-		aling.alignFaceDebugMode(image, faces[i], 150, true);
+		//aling.alignFace(image, faces[i], 200, result);
+		aling.alignFaceDebugMode(image, faces[i], 150, result, true);
 	}
 
 	return 0;

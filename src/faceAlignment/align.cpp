@@ -46,10 +46,11 @@ void FaceAlignment::cvRecttodlibRectangle(const Rect &r, dlib::rectangle &rec)
 }
 
 
-Mat FaceAlignment::alignFaceComplete(
+void FaceAlignment::alignFaceComplete(
 		const Mat &image,
 		const Rect &faceArea,
 		const int size,
+		cv::Mat &alignImage,
 		const bool debugMode,
 		const bool drawMode)
 {
@@ -61,7 +62,7 @@ Mat FaceAlignment::alignFaceComplete(
 	dlib::rectangle face;
 	cvRecttodlibRectangle(faceArea, face);
 
-	//1 - Detect Lankmarks
+	//1 - Detect Landmarks
 	full_object_detection faceLandmarks = landmarkDetector(dlibImage, face);
 
 	//2 - Aling
@@ -73,7 +74,7 @@ Mat FaceAlignment::alignFaceComplete(
 	extract_image_chip(dlibImage, get_face_chip_details(faceLandmarks, size), face_chips);
 
 	// 3- Change to Mat
-	Mat matAlignedFace = toMat(face_chips);
+	alignImage = toMat(face_chips);
 
 	//time stop
 	auto stop = high_resolution_clock::now();
@@ -87,26 +88,29 @@ Mat FaceAlignment::alignFaceComplete(
 	if (drawMode)
 	{
 		namedWindow("Face Aligned", WINDOW_AUTOSIZE);
-		imshow("Face Aligned", matAlignedFace);
+		imshow("Face Aligned", alignImage);
 		waitKey(0); // Wait for a keystroke in the window
 	}
 
-	return matAlignedFace;
 }
 
-Mat FaceAlignment::alignFace(
-		const Mat &image,
-		const Rect &faceArea,
-		const int size)
-{
-	return alignFaceComplete(image, faceArea, size, false, false);
-}
-
-Mat FaceAlignment::alignFaceDebugMode(
+void FaceAlignment::alignFace(
 		const Mat &image,
 		const Rect &faceArea,
 		const int size,
-		const bool draw)
+		cv::Mat &alignImage
+		)
 {
-	return alignFaceComplete(image, faceArea, size, true, draw);
+	alignFaceComplete(image, faceArea, size, alignImage, false, false);
+}
+
+void FaceAlignment::alignFaceDebugMode(
+		const Mat &image,
+		const Rect &faceArea,
+		const int size,
+		cv::Mat &alignImage,
+		const bool draw
+		)
+{
+	alignFaceComplete(image, faceArea, size, alignImage, true, draw);
 }

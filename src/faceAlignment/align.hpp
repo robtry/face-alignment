@@ -31,10 +31,11 @@ private:
 	/**
 	 * Main align method, public are variant of this
 	*/
-	cv::Mat alignFaceComplete(
+	void alignFaceComplete(
 			const cv::Mat &image,
 			const cv::Rect &faceArea,
 			const int size,
+			cv::Mat &alignImage,
 			const bool debugMode,
 			const bool drawMode);
 
@@ -51,22 +52,24 @@ public:
 	 * @param Image => current image analyzing
 	 * @param FaceArea => current ROI, where is possible to detect eyes
 	 * @param Size => for output align image
-	 * 
+	 * @param AligImage => store result
 	 * Align the face using eyes as reference
 	 * @return cv::Mat with face aligned and cropped
 	*/
-	cv::Mat alignFace(
+	void alignFace(
 			const cv::Mat &image,
 			const cv::Rect &faceArea,
-			const int size);
+			const int size,
+			cv::Mat &alignImage);
 	/**
 	 * @see FaceAlignment::alignFace()
 	 * @param draw => if true will show the final image
 	*/
-	cv::Mat alignFaceDebugMode(
+	void alignFaceDebugMode(
 			const cv::Mat &image,
 			const cv::Rect &faceArea,
 			const int size,
+			cv::Mat &alignImage,
 			const bool draw);
 };
 
