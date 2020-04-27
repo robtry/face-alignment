@@ -17,6 +17,9 @@ private:
 	/** sp, can be 5 points or 68 points */
 	dlib::shape_predictor landmarkDetector;
 
+	/** store pointer to convert opencv */
+	dlib::matrix<dlib::rgb_pixel> face_chips;
+
 	/** 
 	 * Load the model using deserialize provided by dlib,
 	 * this should be called inside constructor
@@ -56,6 +59,11 @@ public:
 	 * Align the face using eyes as reference
 	 * @return cv::Mat with face aligned and cropped
 	*/
+	/**
+	 * Clear pointer to result
+	*/
+	~FaceAlignment();
+
 	void alignFace(
 			const cv::Mat &image,
 			const cv::Rect &faceArea,

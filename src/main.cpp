@@ -1,6 +1,7 @@
 #include <opencv2/core.hpp> //types
 #include <opencv2/imgcodecs.hpp> // read image
 #include <dlib/image_processing.h> //shape_predictor
+#include <opencv2/highgui.hpp> // display image in window
 
 #include <iostream>
 
@@ -32,8 +33,11 @@ int main(int argc, char **argv)
 
 	for ( size_t i = 0; i < faces.size(); i++ )
 	{
-		//aling.alignFace(image, faces[i], 200, result);
-		aling.alignFaceDebugMode(image, faces[i], 150, result, true);
+		aling.alignFace(image, faces[i], 200, result);
+		//aling.alignFaceDebugMode(image, faces[i], 150, result, true);
+		namedWindow("Face Aligned", WINDOW_AUTOSIZE);
+		imshow("Face Aligned", result);
+		waitKey(0); // Wait for a keystroke in the window
 	}
 
 	return 0;

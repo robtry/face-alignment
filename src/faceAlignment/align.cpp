@@ -40,6 +40,10 @@ void FaceAlignment::loadModel()
 	}
 }
 
+FaceAlignment::~FaceAlignment(){
+	face_chips.steal_memory();
+}
+
 void FaceAlignment::cvRecttodlibRectangle(const Rect &r, dlib::rectangle &rec)
 {
 	rec = dlib::rectangle((long)r.tl().x, (long)r.tl().y, (long)r.br().x - 1, (long)r.br().y - 1);
@@ -58,6 +62,8 @@ void FaceAlignment::alignFaceComplete(
 	auto start = high_resolution_clock::now();
 
 	// convert to dlib
+	// matrix<rgb_pixel> dlibImage;
+	// assign_image(dlibImage, cv_image<bgr_pixel>(image));
 	cv_image<bgr_pixel> dlibImage(image);
 	dlib::rectangle face;
 	cvRecttodlibRectangle(faceArea, face);
@@ -66,15 +72,19 @@ void FaceAlignment::alignFaceComplete(
 	full_object_detection faceLandmarks = landmarkDetector(dlibImage, face);
 
 	//2 - Aling
-	matrix<bgr_pixel> face_chips; // https://github.com/davisking/dlib/issues/1648
+	//matrix<rgb_pixel> face_chips_local; // https://github.com/davisking/dlib/issues/1648
 	// https://stackoverflow.com/questions/29419274/region-of-interest-extraction-using-dlib
 	// http://dlib.net/dlib/image_transforms/interpolation_abstract.h.html#extract_image_chips
 	// http://dlib.net/dlib/image_transforms/interpolation_abstract.h.html#get_face_chip_details
 
+	//http://dlib.net/dlib/opencv/to_open_cv_abstract.h.html
+
 	extract_image_chip(dlibImage, get_face_chip_details(faceLandmarks, size), face_chips);
 
 	// 3- Change to Mat
+	//face_chips.steal_memory();
 	alignImage = toMat(face_chips);
+
 
 	//time stop
 	auto stop = high_resolution_clock::now();
